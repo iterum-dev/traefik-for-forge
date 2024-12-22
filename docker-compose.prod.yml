@@ -49,3 +49,6 @@ services:
 
       ## AUTH
       - traefik.http.middlewares.auth.basicauth.usersfile=/auth/traefik.auth
+
+      ## Ensure HTTP forwarded to backend services
+      - traefik.http.middlewares.force-http.headers.customRequestHeaders.X-Forwarded-Proto=http
