@@ -24,8 +24,9 @@ services:
       - --providers.docker.exposedbydefault=false
       - --certificatesresolvers.leresolver.acme.email=${LETS_ENCRYPT_EMAIL}
       - --certificatesresolvers.leresolver.acme.storage=/letsencrypt/acme.json
-      - --certificatesresolvers.leresolver.acme.dnschallenge.provider=manual
-      - --certificatesresolvers.leresolver.acme.dnschallenge.disablePropagationCheck=true
+      - --certificatesresolvers.leresolver.acme.dnsChallenge.provider=manual
+      - --certificatesresolvers.leresolver.acme.dnsChallenge.delayBeforeCheck=60
+      - --certificatesresolvers.leresolver.acme.dnsChallenge.disablePropagationCheck=true
     labels:
       ## TRAEFIK ROUTER & DASHBOARD
       - traefik.enable=true
