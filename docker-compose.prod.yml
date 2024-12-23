@@ -20,6 +20,7 @@ services:
       - ./traefik.auth:/auth/traefik.auth
     command:
       - --api.dashboard=true
+      - --log.level=DEBUG
       - --entrypoints.http.address=:80
       - --entrypoints.https.address=:443
       - --providers.docker=true
