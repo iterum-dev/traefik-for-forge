@@ -7,8 +7,8 @@ services:
   traefik:
     image: traefik:v3.2
     restart: always
-    stdin_open: true
-    tty: true
+    # stdin_open: true
+    # tty: true
     networks:
       - web
     ports:
@@ -29,7 +29,7 @@ services:
       - --certificatesresolvers.leresolver.acme.dnschallenge.provider=manual
       - --certificatesresolvers.leresolver.acme.dnschallenge.delayBeforeCheck=30s
       - --certificatesresolvers.leresolver.acme.dnschallenge.resolvers=1.1.1.1:53
-      - --log.level=DEBUG # Enable debug logging
+      # - --log.level=DEBUG
     labels:
       ## TRAEFIK ROUTER & DASHBOARD
       - traefik.enable=true
