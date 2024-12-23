@@ -16,7 +16,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./letsencrypt:/letsencrypt
       - ./traefik.auth:/auth/traefik.auth
-      - /etc/letsencrypt/live/petforms.lv:/certs
+      - ./certs:/certs:ro
     command:
       - --api.dashboard=true
       - --entrypoints.http.address=:80
@@ -32,7 +32,7 @@ services:
       - traefik.http.routers.traefik.rule=Host(`${TRAEFIK_DASHBOARD_HOST}`)
       - traefik.http.routers.traefik.service=api@internal
       - traefik.http.routers.traefik.middlewares=auth
-      - traefik.http.routers.traefik.tls=true
+      - traefik.http.routers.traefik.tls=true  # Use the manually provided TLS certificates
       - traefik.http.services.traefik.loadbalancer.server.port=8080
 
       ## Global redirect to HTTPS
