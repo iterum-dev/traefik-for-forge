@@ -7,6 +7,8 @@ services:
   traefik:
     image: traefik:v2.3
     restart: always
+    stdin_open: true
+    tty: true
     networks:
       - web
     ports:
@@ -25,7 +27,6 @@ services:
       - --certificatesresolvers.leresolver.acme.email=${LETS_ENCRYPT_EMAIL}
       - --certificatesresolvers.leresolver.acme.storage=/letsencrypt/acme.json
       - --certificatesresolvers.leresolver.acme.dnsChallenge.provider=manual
-      - --certificatesresolvers.leresolver.acme.dnsChallenge.delayBeforeCheck=60
       - --certificatesresolvers.leresolver.acme.dnsChallenge.disablePropagationCheck=true
     labels:
       ## TRAEFIK ROUTER & DASHBOARD
