@@ -12,23 +12,20 @@ services:
     ports:
       - "80:80"
       - "443:443"
-      # Uncomment for debug
-      #- "8080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./letsencrypt:/letsencrypt
       - ./traefik.auth:/auth/traefik.auth
     command:
       - --api.dashboard=true
-      # Uncomment for debug
-      #- --api.insecure=true
       - --entrypoints.http.address=:80
       - --entrypoints.https.address=:443
       - --providers.docker=true
       - --providers.docker.exposedbydefault=false
-      - --certificatesresolvers.leresolver.acme.httpchallenge.entrypoint=http
-      - --certificatesresolvers.leresolver.acme.storage=/letsencrypt/acme.json
       - --certificatesresolvers.leresolver.acme.email=${LETS_ENCRYPT_EMAIL}
+      - --certificatesresolvers.leresolver.acme.storage=/letsencrypt/acme.json
+      - --certificatesresolvers.leresolver.acme.dnschallenge.provider=cloudflare
+      - --certificatesresolvers.leresolver.acme.dnschallenge.disablePropagationCheck=true
     labels:
       ## TRAEFIK ROUTER & DASHBOARD
       - traefik.enable=true
@@ -49,6 +46,3 @@ services:
 
       ## AUTH
       - traefik.http.middlewares.auth.basicauth.usersfile=/auth/traefik.auth
-
-      ## Ensure HTTP forwarded to backend services
-      - traefik.http.middlewares.force-http.headers.customRequestHeaders.X-Forwarded-Proto=http
