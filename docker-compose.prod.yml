@@ -7,8 +7,6 @@ services:
   traefik:
     image: traefik:v2.3
     restart: always
-    stdin_open: true
-    tty: true
     networks:
       - web
     ports:
@@ -18,16 +16,15 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./letsencrypt:/letsencrypt
       - ./traefik.auth:/auth/traefik.auth
+      - /etc/letsencrypt/live/petforms.lv:/certs
     command:
       - --api.dashboard=true
       - --entrypoints.http.address=:80
       - --entrypoints.https.address=:443
       - --providers.docker=true
       - --providers.docker.exposedbydefault=false
-      - --certificatesresolvers.leresolver.acme.email=${LETS_ENCRYPT_EMAIL}
-      - --certificatesresolvers.leresolver.acme.storage=/letsencrypt/acme.json
-      - --certificatesresolvers.leresolver.acme.dnsChallenge.provider=manual
-      - --certificatesresolvers.leresolver.acme.dnsChallenge.disablePropagationCheck=true
+      - --entrypoints.https.tls.certificates.certFile=/certs/fullchain.pem
+      - --entrypoints.https.tls.certificates.keyFile=/certs/privkey.pem
     labels:
       ## TRAEFIK ROUTER & DASHBOARD
       - traefik.enable=true
@@ -35,7 +32,7 @@ services:
       - traefik.http.routers.traefik.rule=Host(`${TRAEFIK_DASHBOARD_HOST}`)
       - traefik.http.routers.traefik.service=api@internal
       - traefik.http.routers.traefik.middlewares=auth
-      - traefik.http.routers.traefik.tls.certresolver=leresolver
+      - traefik.http.routers.traefik.tls=true
       - traefik.http.services.traefik.loadbalancer.server.port=8080
 
       ## Global redirect to HTTPS
