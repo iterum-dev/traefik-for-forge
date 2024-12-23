@@ -18,8 +18,7 @@ services:
       - ./traefik.yml:/etc/traefik/traefik.yml
       - ./certs:/certs:ro
     command:
-      - --api.dashboard=true
-      - --providers.docker=true
+      - --providers.docker
     labels:
       ## TRAEFIK ROUTER & DASHBOARD
       - traefik.enable=true
