@@ -4,14 +4,11 @@ entryPoints:
     address: ":80"
   https:
     address: ":443"
+    tls:
+      certificates:
+        certFile: /certs/fullchain.pem
+        keyFile: /certs/privkey.pem
 
 providers:
   docker:
     exposedByDefault: false
-
-tls:
-  certificates:
-    - certFile: "/certs/fullchain.pem"
-      keyFile: "/certs/privkey.pem"
-      stores:
-        - default

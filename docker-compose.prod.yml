@@ -19,7 +19,6 @@ services:
       - ./certs:/certs:ro
     command:
       - --api.dashboard=true
-      - --api.insecure=true
       - --providers.docker=true
     labels:
       ## TRAEFIK ROUTER & DASHBOARD
