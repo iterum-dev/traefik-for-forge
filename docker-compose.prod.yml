@@ -20,8 +20,6 @@ services:
     command:
       - --api.dashboard=true
       - --api.insecure=true
-      - --entrypoints.http.address=:80
-      - --entrypoints.https.address=:443
       - --providers.docker=true
     labels:
       ## TRAEFIK ROUTER & DASHBOARD

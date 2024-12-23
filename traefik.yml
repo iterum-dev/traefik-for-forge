@@ -1,8 +1,8 @@
 ## STATIC CONFIGURATION
 entryPoints:
-  web:
+  http:
     address: ":80"
-  websecure:
+  https:
     address: ":443"
 
 providers:
