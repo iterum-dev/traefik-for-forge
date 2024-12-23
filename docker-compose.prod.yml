@@ -5,7 +5,7 @@ networks:
 
 services:
   traefik:
-    image: traefik:v3
+    image: traefik:v3.2
     restart: always
     networks:
       - web
