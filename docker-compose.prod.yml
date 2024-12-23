@@ -5,7 +5,7 @@ networks:
 
 services:
   traefik:
-    image: traefik:v2.3
+    image: traefik:v3
     restart: always
     networks:
       - web
@@ -14,15 +14,15 @@ services:
       - "443:443"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./letsencrypt:/letsencrypt
       - ./traefik.auth:/auth/traefik.auth
+      - ./traefik.yml:/etc/traefik/traefik.yml
       - ./certs:/certs:ro
     command:
       - --api.dashboard=true
+      - --api.insecure=true
       - --entrypoints.http.address=:80
       - --entrypoints.https.address=:443
       - --providers.docker=true
-      - --providers.docker.exposedbydefault=false
     labels:
       ## TRAEFIK ROUTER & DASHBOARD
       - traefik.enable=true
@@ -44,7 +44,3 @@ services:
 
       ## AUTH
       - traefik.http.middlewares.auth.basicauth.usersfile=/auth/traefik.auth
-
-      ## SSL Certificates Configuration
-      - traefik.http.routers.traefik.tls.certificates.certFile=/certs/fullchain.pem
-      - traefik.http.routers.traefik.tls.certificates.keyFile=/certs/privkey.pem
