@@ -27,8 +27,6 @@ services:
       - traefik.http.routers.traefik.rule=Host(`${TRAEFIK_DASHBOARD_HOST}`)
       - traefik.http.routers.traefik.service=api@internal
       - traefik.http.routers.traefik.middlewares=auth
-      - traefik.http.routers.traefik.tls=true  # Use the manually provided TLS certificates
-      - traefik.http.routers.traefik.tls.certresolver=default
       - traefik.http.services.traefik.loadbalancer.server.port=8080
 
       ## Global redirect to HTTPS

@@ -6,8 +6,8 @@ entryPoints:
     address: ":443"
     tls:
       certificates:
-        certFile: /certs/fullchain.pem
-        keyFile: /certs/privkey.pem
+        - certFile: /certs/fullchain.pem
+          keyFile: /certs/privkey.pem
 
 providers:
   docker:
