@@ -7,6 +7,8 @@ services:
   traefik:
     image: traefik:v3.2
     restart: always
+    stdin_open: true
+    tty: true
     networks:
       - web
     ports:
@@ -14,11 +16,18 @@ services:
       - "443:443"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./letsencrypt:/letsencrypt
       - ./traefik.auth:/auth/traefik.auth
-      - ./traefik.yml:/etc/traefik/traefik.yml
-      - ./certs:/certs:ro
     command:
-      - --providers.docker
+      - --api.dashboard=true
+      - --entrypoints.http.address=:80
+      - --entrypoints.https.address=:443
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --certificatesresolvers.default.acme.email=${LETS_ENCRYPT_EMAIL}
+      - --certificatesresolvers.default.acme.storage=/letsencrypt/acme.json
+      - --certificatesresolvers.default.acme.dnschallenge.provider=manual
+      - --certificatesresolvers.default.acme.dnschallenge.delayBeforeCheck=60s
     labels:
       ## TRAEFIK ROUTER & DASHBOARD
       - traefik.enable=true
