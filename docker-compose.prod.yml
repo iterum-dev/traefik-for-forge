@@ -18,7 +18,6 @@ services:
       - ./traefik.auth:/auth/traefik.auth
     command:
       - --api.dashboard=true
-      - --log.level=DEBUG
       - --entrypoints.http.address=:80
       - --entrypoints.https.address=:443
       - --providers.docker=true
@@ -26,7 +25,7 @@ services:
       - --certificatesresolvers.leresolver.acme.email=${LETS_ENCRYPT_EMAIL}
       - --certificatesresolvers.leresolver.acme.storage=/letsencrypt/acme.json
       - --certificatesresolvers.leresolver.acme.dnschallenge.provider=manual
-      - --certificatesresolvers.leresolver.acme.dnschallenge.delayBeforeCheck=60s
+      - --certificatesresolvers.leresolver.acme.dnschallenge.delayBeforeCheck=30s
       - --certificatesresolvers.leresolver.acme.dnschallenge.resolvers=1.1.1.1:53
     labels:
       ## TRAEFIK ROUTER & DASHBOARD
